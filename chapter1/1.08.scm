@@ -1,0 +1,16 @@
+#lang sicp
+(define (cbrt n)
+  (define x (abs n))
+  (define (cube a) (* a a a))
+  (define (good-enough? guess)
+    (< (abs (- (cube guess) x))
+       (abs (* guess 0.001))))
+  (define (improve guess)
+    (/ (+ (/ x (* guess guess))
+          (* 2 guess))
+       3))
+  (define (cbrt-iter guess)
+    (if (good-enough? guess)
+        guess
+        (cbrt-iter (improve guess))))
+  ((if (< n 0) - +) (cbrt-iter 1.0)))
